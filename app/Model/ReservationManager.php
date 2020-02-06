@@ -11,7 +11,12 @@ class ReservationManager {
     /** @var Nette\Database\Context */
     private $database;
 
-    private $formData;
+    private $name;
+    private $email;
+    private $datetime;
+    private $place;
+    private $approved;
+    private $created;
 
     public function __construct(Nette\Database\Context $database) {
         $this->database = $database;
@@ -22,29 +27,36 @@ class ReservationManager {
     }
 
     private function setFormData () {
-        $this->formData['name'] = $_POST['name'];
-        $this->formData['email'] = $_POST['email'];
-        $this->formData['datetime'] = $_POST['datetime'];
-        $this->formData['place'] = $_POST['place'];
-        $this->formData['approved'] = 0;
-        $this->formData['created'] = date('Y-m-d', time());
-    }
-
-    public function getFormData (): array {
-        return $this->formData;
+        $this->name = $_POST['name'];
+        $this->email = $_POST['email'];
+        $this->datetime = $_POST['datetime'];
+        $this->place = $_POST['place'];
+        $this->approved = 0;
+        $this->created = date('Y-m-d', time());
     }
 
     public function insertIntoReservation () {
+        $this->setFormData();
+        if ($this->freeDate()) {
+            $this->database->table('reservationinfo')->insert([
+                'name' => $this->name,
+                'email' => $this->email,
+                'datetime' => $this->datetime,
+                'place' => $this->place,
+                'approved' => $this->approved,
+                'created' => $this->created,
+            ]);
 
-    }
+            }
+        }
 
-    private function freeDate () {
+    public function freeDate () {
         $dateDiffMinus = date('yy-m-d H:i:s', strtotime($this->datetime .'+4 hours'));
         $dateDiffPlus = date('yy-m-d H:i:s', strtotime($this->datetime .'-4 hours'));
-        $vysledek = $this->database->query("SELECT datetime FROM reservationinfo WHERE
-                    datetime BETWEEN '". $dateDiffPlus ."' AND '". $dateDiffMinus ."'");
-        $array = $vysledek->fetchAll(PDO::FETCH_COLUMN);
-        if (empty($array)) {
+        $result = $this->database->query('SELECT * FROM reservationinfo WHERE', [
+            $this->database::literal('datetime > ? AND datetime < ?', $dateDiffPlus, $dateDiffMinus),
+        ])->fetch();
+        if (empty($result)) {
             return true;
         } else return false;
     }

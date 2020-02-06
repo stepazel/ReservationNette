@@ -22,20 +22,30 @@ final class HomepagePresenter extends BasePresenter
     protected function createComponentReservationForm (): Form {
         $form = new Form;
 
-        $form->addText('name', 'Jméno')
+        $form->addText('name', 'Jméno:')
             ->setRequired();
 
         $form->addEmail('email', 'Email:')
             ->setRequired();
 
-       // $form->addDateTimePicker('datetime', 'Date and time:', 16)
-         //   ->setFormat('d/m/Y H:i');
+        $form->addText('datetime', 'Čas konání:')
+            ->setRequired()
+            ->setHtmlAttribute('type', 'datetime-local');
 
-        $form->addText('place', 'Místo konání')
+        $form->addText('place', 'Místo konání:')
             ->setRequired();
 
         $form->addSubmit('submit');
 
+        $form->onSuccess[] = [$this, 'reservationFormSucceeded'];
+
         return $form;
+    }
+
+    public function reservationFormSucceeded (Form $form): void {
+        $this->flashMessage('nazdar', 'success');
+
+        $this->redirect('this');
+
     }
 }

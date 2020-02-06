@@ -34,7 +34,18 @@ class ReservationManager {
         return $this->formData;
     }
 
-    public function insertReservation () {
+    public function insertIntoReservation () {
 
+    }
+
+    private function freeDate () {
+        $dateDiffMinus = date('yy-m-d H:i:s', strtotime($this->datetime .'+4 hours'));
+        $dateDiffPlus = date('yy-m-d H:i:s', strtotime($this->datetime .'-4 hours'));
+        $vysledek = $this->database->query("SELECT datetime FROM reservationinfo WHERE
+                    datetime BETWEEN '". $dateDiffPlus ."' AND '". $dateDiffMinus ."'");
+        $array = $vysledek->fetchAll(PDO::FETCH_COLUMN);
+        if (empty($array)) {
+            return true;
+        } else return false;
     }
 }

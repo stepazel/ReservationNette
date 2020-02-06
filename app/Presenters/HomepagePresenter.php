@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use Nette;
 use App\Model\ReservationManager;
-use Nette\Forms\Form;
+use Nette\Application\UI;
 
 
 final class HomepagePresenter extends BasePresenter
@@ -19,8 +19,8 @@ final class HomepagePresenter extends BasePresenter
         $this->reservationManager = $reservationManager;
     }
 
-    protected function createComponentReservationForm (): Form {
-        $form = new Form;
+    protected function createComponentReservationForm (): UI\Form {
+        $form = new UI\Form;
 
         $form->addText('name', 'Jméno:')
             ->setRequired();
@@ -42,7 +42,7 @@ final class HomepagePresenter extends BasePresenter
         return $form;
     }
 
-    public function reservationFormSucceeded (Form $form): void {
+    public function reservationFormSucceeded (UI\Form $form): void {
         $this->flashMessage('nazdar', 'success');
 
         $this->redirect('this');

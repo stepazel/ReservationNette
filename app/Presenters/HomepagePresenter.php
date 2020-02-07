@@ -7,6 +7,8 @@ namespace App\Presenters;
 use Nette;
 use App\Model\ReservationManager;
 use Nette\Application\UI;
+use Nette\Utils\ArrayHash;
+
 
 
 final class HomepagePresenter extends BasePresenter
@@ -43,10 +45,11 @@ final class HomepagePresenter extends BasePresenter
     }
 
     public function reservationFormSucceeded (UI\Form $form): void {
-        if ($this->reservationManager->freeDate()) {
+        if ($this->reservationManager->freeDate() {
             $this->reservationManager->insertIntoReservation();
-        $this->flashMessage('nazdar', 'success');
-        $this->redirect('this');
+            $this->flashMessage('nazdar', 'success');
+        } else {
+            $this->flashMessage('kokot', '');
         }
-    }
+    } // change flashMessage
 }

@@ -3,6 +3,7 @@
 
 namespace App\Model;
 
+use Cassandra\Date;
 use Nette;
 use Nette\Utils\ArrayHash;
 
@@ -11,8 +12,6 @@ class ReservationManager {
 
     /** @var Nette\Database\Context */
     private $database;
-
-
 
     public function __construct(Nette\Database\Context $database) {
         $this->database = $database;
@@ -24,14 +23,14 @@ class ReservationManager {
 
     public function insertIntoReservation (ArrayHash $values) {
         if ($this->freeDate($values)) {
-            $this->database->table('reservationinfo')->insert([
+            $this->getReservations()->insert([
                 'name' => $values->name,
                 'email' => $values->email,
                 'datetime' => $values->datetime,
                 'place' => $values->place,
-                'approved' => $values->approved,
-                'created' => $values->created,
-            ]);
+                'approved' => 0,
+                'created' => date('Y-m-d', time()),
+                ]);
             }
         }
 

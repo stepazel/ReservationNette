@@ -44,12 +44,12 @@ final class HomepagePresenter extends BasePresenter
         return $form;
     }
 
-    public function reservationFormSucceeded (UI\Form $form): void {
-        if ($this->reservationManager->freeDate() {
-            $this->reservationManager->insertIntoReservation();
+    public function reservationFormSucceeded (UI\Form $form, ArrayHash $values) {
+        if ($this->reservationManager->freeDate($values)) {
+            $this->reservationManager->insertIntoReservation($values);
             $this->flashMessage('nazdar', 'success');
         } else {
-            $this->flashMessage('kokot', '');
+            $this->flashMessage('kokot', 'error');
         }
-    } // change flashMessage
+    }
 }

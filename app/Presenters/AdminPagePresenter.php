@@ -30,15 +30,14 @@ class AdminPagePresenter extends BasePresenter {
 
         $this->template->reservations = $reservations;
         $this->template->paginator = $paginator;
-        $this->template->x = $reservationsCount;
     }
 
-    public function handleApprovedChange ($id, $value) {
-        $this->adminManager->updateApproved($id, $value);
-        if ($id === 1) {
+    public function handleApprovedChange ($reservationId, $value) {
+        $this->adminManager->updateApproved($reservationId, $value);
+        if ($value === '1') {
             $this->flashMessage('Termín byl potvrzen.');
             $this->redirect('this');
-        } else {
+        } elseif ($value === '0') {
             $this->flashMessage('Termín byl zamítnut.');
             $this->redirect('this');
         }

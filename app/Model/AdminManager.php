@@ -24,7 +24,7 @@ class AdminManager {
     }
 
     public function getReservationsCount (): int {
-        return $this->database->fetchField('SELECT * FROM reservationinfo');
+        return $this->database->table('reservationinfo')->count();
     }
 
     public function updateApproved (int $id, int $value) {

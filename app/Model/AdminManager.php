@@ -14,8 +14,17 @@ class AdminManager {
         $this->database = $database;
     }
 
-    public function getReservations () {
-        return $this->database->table('reservationinfo');
+    public function getReservations (int $limit, int $offset):Nette\Database\ResultSet {
+        return $this->database->query('
+            SELECT * FROM reservationinfo
+            LIMIT ?
+            OFFSET ?',
+            $limit, $offset
+            );
+    }
+
+    public function getReservationsCount (): int {
+        return $this->database->fetchField('SELECT * FROM reservationinfo');
     }
 
     public function updateApproved (int $id, int $value) {

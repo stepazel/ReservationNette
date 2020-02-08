@@ -1,0 +1,40 @@
+{block content}
+    <h2>{$x}</h2>
+    <h2>Adminstrativa koncertů Daydreams</h2>
+    <div>
+        <table class="table">
+            <tbody>
+                {foreach $reservations as $reservation}
+                    <tr>
+                        <td>{$reservation->name}</td>
+                        <td>{$reservation->email}</td>
+                        <td>{$reservation->datetime}</td>
+                        <td>{$reservation->place}</td>
+                        <td>{$reservation->created}</td>
+                        <td>{$reservation->approved}</td>
+                        <td><a n:href="approvedChange! $reservation->id, 1">Potvrdit</a></td>
+                        <td><a n:href="approvedChange! $reservation->id, 0">Zamítnout</a></td>
+                    </tr>
+                {/foreach}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        {if !$paginator->isFirst()}
+            <a n:href="default, 1">První</a>
+            &nbsp;|&nbsp;
+            <a n:href="default, $paginator->page-1">Předchozí</a>
+            &nbsp;|&nbsp;
+        {/if}
+
+        Stránka {$paginator->page} z {$paginator->pageCount}
+
+        {if !$paginator->isLast()}
+            &nbsp;|&nbsp;
+            <a n:href="default, $paginator->page+1">Další</a>
+            &nbsp;|&nbsp;
+            <a n:href="default, $paginator->pageCount">Poslední</a>
+        {/if}
+    </div>
+{/block}

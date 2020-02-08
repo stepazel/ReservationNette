@@ -11,12 +11,26 @@ class AdminPagePresenter extends BasePresenter {
     /** @var AdminManager */
     private $adminManager;
 
+    const itemsPerPage = 10;
+
     public function __construct(AdminManager $adminManager) {
         $this->adminManager = $adminManager;
     }
 
-    public function renderTable () {
-        $this->template->reservations = $this->adminManager->getReservations();
+    public function renderDefault (int $page = 1) {
+
+        $reservationsCount = $this->adminManager->getReservationsCount();
+
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemCount($reservationsCount);
+        $paginator->setItemsPerPage(self::itemsPerPage);
+        $paginator->setPage($page);
+
+        $reservations = $this->adminManager->getReservations($paginator->getLength(), $paginator->getOffset());
+
+        $this->template->reservations = $reservations;
+        $this->template->paginator = $paginator;
+        $this->template->x = $reservationsCount;
     }
 
     public function handleApprovedChange ($id, $value) {

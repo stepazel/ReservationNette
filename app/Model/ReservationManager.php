@@ -3,7 +3,6 @@
 
 namespace App\Model;
 
-use Cassandra\Date;
 use Nette;
 use Nette\Utils\ArrayHash;
 

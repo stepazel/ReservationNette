@@ -47,9 +47,9 @@ final class HomepagePresenter extends BasePresenter
     public function reservationFormSucceeded (UI\Form $form, ArrayHash $values) {
         if ($this->reservationManager->freeDate($values)) {
             $this->reservationManager->insertIntoReservation($values);
-            $this->flashMessage('nazdar', 'success');
+            $this->flashMessage('Děkujeme! Co nejdříve se vám ozveme.', 'success');
         } else {
-            $this->flashMessage('kokot', 'error');
+            $this->flashMessage('Tento termín je bohužel obsazený.', 'error');
         }
     }
 }

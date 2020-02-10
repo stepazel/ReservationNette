@@ -42,4 +42,32 @@ class AdminPagePresenter extends BasePresenter {
             $this->redirect('this');
         }
     }
+
+    public function createComponentFilterForm () {
+        $form = new Nette\Application\UI\Form();
+
+        $form->addText('name', 'Filtrujte pomocí jména');
+        $form->addText('email', 'Filtrujte pomocí mailu');
+        $form->addText('datetimeFrom', 'Filtrovat pomocí času konání')
+            ->setHtmlType('date');
+        $form->addText('datetimeTo')
+            ->setHtmlType('date');
+        $form->addText('place', 'Filtrovat místo konání');
+        $form->addText('approved', 'Filtrovat stav potvrzení');
+        $form->addText('createdFrom', 'Filtrovat datum vytvoření')
+            ->setHtmlType('date');
+        $form->addText('createdTo')
+            ->setHtmlType('date');
+        $form->addSubmit('submit');
+
+        $form->setMethod('get');
+
+        $form->onSuccess[] = [$this, 'filterFormSucceeded'];
+
+        return $form;
+    }
+
+    public function filterFormSucceeded (Nette\Application\UI\Form $form, Nette\Utils\ArrayHash $parameters) {
+        $this->adminManager->getFilterQuery($parameters);
+    }
 }

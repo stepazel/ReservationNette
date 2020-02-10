@@ -3,6 +3,17 @@
     <h2>Adminstrativa koncertů Daydreams</h2>
     <div>
         <table class="table">
+            <thead>
+                <tr>
+                    <td>Jméno</td>
+                    <td>Email</td>
+                    <td>Čas konání</td>
+                    <td>Místo konání</td>
+                    <td>Datum vytvoření</td>
+                    <td>Stav potvrzení</td>
+                    <td></td>
+                </tr>
+            </thead>
             <tbody>
                 {foreach $reservations as $reservation}
                     <tr>
@@ -16,6 +27,25 @@
                         <td><a n:href="approvedChange! $reservation->id, 0">Zamítnout</a></td>
                     </tr>
                 {/foreach}
+                {form filterForm}
+                <tr>
+                    <td>{label name}{input name}</td>
+                    <td>{label email}{input email}</td>
+                    <td>
+                        {label datetimeFrom}
+                        {input datetimeFrom}
+                        {input datetimeTo}
+                    </td>
+                    <td>{label place}{input place}</td>
+                    <td>
+                        {label createdFrom}
+                        {input createdFrom}
+                        {input createdTo}
+                    </td>
+                    <td>{label approved}{input approved}</td>
+                    <td>{input submit}</td>
+                </tr>
+                {/form}
             </tbody>
         </table>
     </div>

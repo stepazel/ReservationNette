@@ -11,7 +11,11 @@ class AdminPagePresenter extends BasePresenter {
     /** @var AdminManager */
     private $adminManager;
 
-    const itemsPerPage = 10;
+
+    /** @persistent */
+    public $parameters = [];
+
+    const itemsPerPage = 4;
 
     public function __construct(AdminManager $adminManager) {
         $this->adminManager = $adminManager;
@@ -62,12 +66,15 @@ class AdminPagePresenter extends BasePresenter {
 
         $form->setMethod('get');
 
+
         $form->onSuccess[] = [$this, 'filterFormSucceeded'];
 
         return $form;
     }
 
     public function filterFormSucceeded (Nette\Application\UI\Form $form, Nette\Utils\ArrayHash $parameters) {
+        $this->parameters = $parameters;
         $this->adminManager->getFilterQuery($parameters);
     }
+
 }

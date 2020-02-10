@@ -52,9 +52,9 @@
 
     <div class="pagination">
         {if !$paginator->isFirst()}
-            <a n:href="default, 1">První</a>
+            <a n:href="this, 1">První</a>
             &nbsp;|&nbsp;
-            <a n:href="default, $paginator->page-1">Předchozí</a>
+            <a n:href="this, $paginator->page-1">Předchozí</a>
             &nbsp;|&nbsp;
         {/if}
 
@@ -62,9 +62,9 @@
 
         {if !$paginator->isLast()}
             &nbsp;|&nbsp;
-            <a n:href="default, $paginator->page+1">Další</a>
+            <a n:href="this, $paginator->page+1">Další</a>
             &nbsp;|&nbsp;
-            <a n:href="default, $paginator->pageCount">Poslední</a>
+            <a n:href="this, $paginator->pageCount">Poslední</a>
         {/if}
     </div>
 {/block}

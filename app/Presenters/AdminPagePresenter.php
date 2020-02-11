@@ -4,6 +4,7 @@
 namespace App\Presenters;
 
 use App\Model\AdminManager;
+
 use Nette;
 
 class AdminPagePresenter extends BasePresenter {
@@ -11,11 +12,14 @@ class AdminPagePresenter extends BasePresenter {
     /** @var AdminManager */
     private $adminManager;
 
-
     /** @persistent */
-    public $parameters = [];
+    public $filters = [];
 
     const itemsPerPage = 4;
+
+    public function startup() {
+        parent::startup();
+    }
 
     public function __construct(AdminManager $adminManager) {
         $this->adminManager = $adminManager;
@@ -66,15 +70,17 @@ class AdminPagePresenter extends BasePresenter {
 
         $form->setMethod('get');
 
-
         $form->onSuccess[] = [$this, 'filterFormSucceeded'];
 
         return $form;
     }
 
     public function filterFormSucceeded (Nette\Application\UI\Form $form, Nette\Utils\ArrayHash $parameters) {
-        $this->parameters = $parameters;
-        $this->adminManager->getFilterQuery($parameters);
+
+
+       $this->adminManager->setFilters($parameters);
+        bdump($this->filters);
+
     }
 
 }

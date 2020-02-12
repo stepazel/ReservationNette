@@ -16,9 +16,9 @@ session:
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=reservation'
-	user:
-	password:
+	dsn: 'md55.wedos.net;dbname=d225105_nette'
+	user: a225105_nette
+	password: cnZqbkN7vkF.
 	options:
 		lazy: yes
 
@@ -31,4 +31,5 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\ReservationManager
 	- App\Model\AdminManager
+	authenticator: App\Model\MyAuthenticator
 

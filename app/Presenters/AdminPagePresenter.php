@@ -17,27 +17,19 @@ class AdminPagePresenter extends BasePresenter {
 
     const itemsPerPage = 4;
 
-    public function startup() {
-        parent::startup();
-    }
 
     public function __construct(AdminManager $adminManager) {
         $this->adminManager = $adminManager;
     }
 
-    public function renderDefault (int $page = 1) {
+    public function renderDefault (int $page = 1): void {
 
-        $reservationsCount = $this->adminManager->getReservationsCount();
+        $lastPage = 0;
+        $reservations = $this->adminManager->getFilteredReservations($this->filters);
 
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount($reservationsCount);
-        $paginator->setItemsPerPage(self::itemsPerPage);
-        $paginator->setPage($page);
-
-        $reservations = $this->adminManager->getReservations($paginator->getLength(), $paginator->getOffset());
-
-        $this->template->reservations = $reservations;
-        $this->template->paginator = $paginator;
+        $this->template->reservations = $reservations->page($page, self::itemsPerPage, $lastPage);
+        $this->template->page = $page;
+        $this->template->lastPage = $lastPage;
     }
 
     public function handleApprovedChange ($reservationId, $value) {
@@ -77,10 +69,8 @@ class AdminPagePresenter extends BasePresenter {
 
     public function filterFormSucceeded (Nette\Application\UI\Form $form, Nette\Utils\ArrayHash $parameters) {
 
-
        $this->adminManager->setFilters($parameters);
-        bdump($this->filters);
-
+       $this->filters = $this->adminManager->getFilters();
+       dump($this->filters['approved']);
     }
-
 }

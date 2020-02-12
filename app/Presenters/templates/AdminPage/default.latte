@@ -51,20 +51,20 @@
     </div>
 
     <div class="pagination">
-        {if !$paginator->isFirst()}
+        {if $page > 1}
             <a n:href="this, 1">První</a>
             &nbsp;|&nbsp;
-            <a n:href="this, $paginator->page-1">Předchozí</a>
+            <a n:href="this, $page-1">Předchozí</a>
             &nbsp;|&nbsp;
         {/if}
 
-        Stránka {$paginator->page} z {$paginator->pageCount}
+        Stránka {$page} z {$lastPage}
 
-        {if !$paginator->isLast()}
+        {if $page < $lastPage}
             &nbsp;|&nbsp;
-            <a n:href="this, $paginator->page+1">Další</a>
+            <a n:href="this, $page+1">Další</a>
             &nbsp;|&nbsp;
-            <a n:href="this, $paginator->pageCount">Poslední</a>
+            <a n:href="this, $lastPage">Poslední</a>
         {/if}
     </div>
 {/block}

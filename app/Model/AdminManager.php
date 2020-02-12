@@ -31,19 +31,6 @@ class AdminManager {
         return $this->filters;
     }
 
-    public function getReservations (int $limit, int $offset):Nette\Database\ResultSet {
-        return $this->database->query(
-            $this->getFilterQuery($this->getFilters()).'
-            LIMIT ?
-            OFFSET ?',
-            $limit, $offset
-            );
-    }
-
-    public function getReservationsCount (): int {
-        return $this->database->table('reservationinfo')->count('*');
-    }
-
     public function updateApproved (int $id, int $value) {
         $this->database->table('reservationinfo')
             ->where('id', $id)
@@ -52,7 +39,7 @@ class AdminManager {
             ]);
     }
 
-    public function getFilterQuery (Array $filters) {
+    public function getFilteredReservations (Array $filters) {
         $reservations = $this->database->table('reservationinfo');
         if ($filters['name']) {
             $reservations->where('name LIKE ?', '%'.$filters['name'].'%');
@@ -66,12 +53,12 @@ class AdminManager {
         if ($filters['place']) {
             $reservations->where('place LIKE ?', '%'.$filters['place'].'%');
         }
-        if ($filters['approved']) {
+        if ($filters['approved'] !== '') {
             $reservations->where('approved', $filters['approved']);
         }
         if ($filters['createdFrom'] and $filters['createdTo']) {
             $reservations->where('created BETWEEN ? AND ?', $filters['createdFrom'], $filters['createdTo']);
         }
+        return $reservations;
     }
-
 }

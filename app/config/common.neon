@@ -16,7 +16,7 @@ session:
 
 
 database:
-	dsn: 'md55.wedos.net;dbname=d225105_nette'
+	dsn: 'mysql:host=md55.wedos.net;dbname=d225105_nette'
 	user: a225105_nette
 	password: cnZqbkN7vkF.
 	options:

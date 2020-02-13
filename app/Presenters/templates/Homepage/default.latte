@@ -1,6 +1,11 @@
 {block content}
-	<h1 n:block="title">Rezervační systém kapely DayDreams</h1>
 
-	{control reservationForm}
-	<a n:href="AdminPage:default">Přejít na administraci</a>
+    <h2>Vítejte na stránkách kapely DayDreams</h2>
+
+    <div>Klikněte <a>zde</a> pro zobrazení nadcházejících koncertů</div>
+    <br/>
+    <div><a n:href="Sign:in" n:if="!$user->loggedIn">Přihlásit se</a></div>
+    <div><a n:href="Sign:out" n:if="$user->loggedIn">Odhlásit se</a></div>
+    <div><a n:href="AdminPage:default">Přejít na administraci</a></div>
+
 {/block}

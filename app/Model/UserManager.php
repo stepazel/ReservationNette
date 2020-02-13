@@ -38,10 +38,12 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-	/**
-	 * Performs an authentication.
-	 * @throws Nette\Security\AuthenticationException
-	 */
+    /**
+     * Performs an authentication.
+     * @param array $credentials
+     * @return Nette\Security\IIdentity
+     * @throws Nette\Security\AuthenticationException
+     */
 	public function authenticate(array $credentials): Nette\Security\IIdentity
 	{
 		[$username, $password] = $credentials;
@@ -68,10 +70,14 @@ final class UserManager implements Nette\Security\IAuthenticator
 	}
 
 
-	/**
-	 * Adds new user.
-	 * @throws DuplicateNameException
-	 */
+    /**
+     * Adds new user.
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     * @throws DuplicateNameException
+     * @throws Nette\Utils\AssertionException
+     */
 	public function add(string $username, string $email, string $password): void
 	{
 		Nette\Utils\Validators::assert($email, 'email');

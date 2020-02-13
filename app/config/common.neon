@@ -31,3 +31,16 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\ReservationManager
 	- App\Model\AdminManager
+	acl:
+	    factory: Nette\Security\Permission
+	    setup:
+	        - addRole(admin)
+	        - addRole(user)
+	        - addRole(guest)
+
+	        - addResource(backend)
+
+	        - allow(admin, backend)
+	        - deny(guest, backend)
+	        - deny(user, backend)
+

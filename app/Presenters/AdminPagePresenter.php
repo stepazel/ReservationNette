@@ -17,6 +17,13 @@ class AdminPagePresenter extends BasePresenter {
 
     const itemsPerPage = 4;
 
+    protected function startup() {
+        parent::startup();
+            if (!$this->getUser()->isAllowed('backend')) {
+                throw new \Exception('Sem nemáte přístup.');
+            }
+    }
+
     public function __construct(AdminManager $adminManager) {
         $this->adminManager = $adminManager;
     }

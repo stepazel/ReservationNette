@@ -19,11 +19,13 @@
 </head>
 
 <body>
+
 	<div class=container>
 		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 
 		{include content}
 	</div>
+
 
 	{block scripts}
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

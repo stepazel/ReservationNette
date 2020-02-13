@@ -31,5 +31,3 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\ReservationManager
 	- App\Model\AdminManager
-	authenticator: App\Model\MyAuthenticator
-

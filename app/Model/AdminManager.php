@@ -16,7 +16,7 @@ class AdminManager {
         $this->database = $database;
     }
 
-    public function setFilters (Nette\Utils\ArrayHash $parameters) {
+    public function setFilters ($parameters) {
         $this->filters['name'] = $parameters['name'];
         $this->filters['email'] = $parameters['email'];
         $this->filters['place'] = $parameters['place'];
@@ -39,26 +39,30 @@ class AdminManager {
             ]);
     }
 
+    public function getAllReservations () {
+        return $this->database->table('reservationinfo');
+    }
+
     public function getFilteredReservations (Array $filters) {
         $reservations = $this->database->table('reservationinfo');
-        if ($filters['name']) {
-            $reservations->where('name LIKE ?', '%'.$filters['name'].'%');
-        }
-        if ($filters['email']) {
-            $reservations->where('email LIKE ?', '%'.$filters['email'].'%');
-        }
-        if ($filters['datetimeFrom'] and $filters['datetimeTo']) {
-            $reservations->where('datetime BETWEEN ? AND ?', $filters['datetimeFrom'], $filters['datetimeTo']);
-        }
-        if ($filters['place']) {
-            $reservations->where('place LIKE ?', '%'.$filters['place'].'%');
-        }
-        if ($filters['approved'] !== '') {
-            $reservations->where('approved', $filters['approved']);
-        }
-        if ($filters['createdFrom'] and $filters['createdTo']) {
-            $reservations->where('created BETWEEN ? AND ?', $filters['createdFrom'], $filters['createdTo']);
-        }
+            if ($filters['name']) {
+                $reservations->where('name LIKE ?', '%' . $filters['name'] . '%');
+            }
+            if ($filters['email']) {
+                $reservations->where('email LIKE ?', '%' . $filters['email'] . '%');
+            }
+            if ($filters['datetimeFrom'] and $filters['datetimeTo']) {
+                $reservations->where('datetime BETWEEN ? AND ?', $filters['datetimeFrom'], $filters['datetimeTo']);
+            }
+            if ($filters['place']) {
+                $reservations->where('place LIKE ?', '%' . $filters['place'] . '%');
+            }
+            if ($filters['approved'] !== '') {
+                $reservations->where('approved', $filters['approved']);
+            }
+            if ($filters['createdFrom'] and $filters['createdTo']) {
+                $reservations->where('created BETWEEN ? AND ?', $filters['createdFrom'], $filters['createdTo']);
+            }
         return $reservations;
     }
 }

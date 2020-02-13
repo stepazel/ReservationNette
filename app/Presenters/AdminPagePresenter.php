@@ -47,6 +47,10 @@ class AdminPagePresenter extends BasePresenter {
         }
     }
 
+    public function handleFiltersReset () {
+        $this->redirect('this', ["filters" => NULL, "page" => 1]);
+    }
+
     public function createComponentFilterForm () {
         $form = new Nette\Application\UI\Form();
 

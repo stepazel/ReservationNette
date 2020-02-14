@@ -43,4 +43,14 @@ class ReservationManager {
             return true;
         } else return false;
     }
+
+    public function getApprovedReservations () {
+        return $this->database->table('reservationinfo')->where('approved = ?', '1');
+    }
+
+    public function newAttendant ($reservationId): void {
+        $this->database->table('relational_table')->insert([
+            'reservation_id' => $reservationId
+        ]);
+    }
 }

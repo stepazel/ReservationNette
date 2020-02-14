@@ -1,0 +1,24 @@
+{block content}
+<a n:href="Homepage:default">Zpět na výchozí stránku</a>
+
+<h2>Koncerty kapely DayDreams</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td><strong>Místo konání<strong></td>
+                <td><strong>Čas konání</strong></td>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $approvedReservations as $reservation}
+                <tr>
+                    <td>{$reservation->place}</td>
+                    <td>{$reservation->datetime}</td>
+                    <td><a n:href="ConfirmAttendance! $reservation->id">Potvrdit učást</a></td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>

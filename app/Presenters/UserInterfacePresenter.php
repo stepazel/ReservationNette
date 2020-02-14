@@ -20,6 +20,6 @@ class UserInterfacePresenter extends BasePresenter {
     }
 
     public function handleConfirmAttendance ($reservationId): void {
-        $this->reservationManager->newAttendant($reservationId);
+        $this->reservationManager->newAttendant($reservationId, $this->getUser()->id);
     }
 }

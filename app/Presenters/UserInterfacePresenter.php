@@ -3,7 +3,6 @@
 
 namespace App\Presenters;
 
-
 use App\Model\ReservationManager;
 
 class UserInterfacePresenter extends BasePresenter {
@@ -22,4 +21,9 @@ class UserInterfacePresenter extends BasePresenter {
     public function handleConfirmAttendance ($reservationId): void {
         $this->reservationManager->newAttendant($reservationId, $this->getUser()->id);
     }
+
+    public function isAttended ($reservationID) {
+        return $this->reservationManager->getAttendance($this->getUser()->id, $reservationID);
+    }
+
 }

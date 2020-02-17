@@ -54,4 +54,16 @@ class ReservationManager {
             'user_id' => $userId
         ]);
     }
+
+    public function getAttendance ($userID, $reservationID) {
+        $selection = $this->database->table('concert_attendance')
+            ->where('user_id = ?', $userID)
+            ->where('reservation_id = ?', $reservationID);
+        if ($selection->fetch() == null) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }

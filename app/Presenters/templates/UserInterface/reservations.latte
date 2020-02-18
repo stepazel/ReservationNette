@@ -17,9 +17,10 @@
                 <tr>
                     <td>{$reservation->place}</td>
                     <td>{$reservation->datetime}</td>
-                    <td>
+                    <td n:if="$user->isLoggedIn()">
                         <a n:href="ConfirmAttendance! $reservation->id" n:if="!$presenter->isAttended($reservation->id)">Potvrdit učást</a>
-                        <p n:if="$presenter->isAttended($reservation->id)">Účast již byla potvrzena.</p>
+                        <a n:href="CancelAttendance! $reservation->id" n:if="$presenter->isAttended($reservation->id)"
+                        style="color: maroon">Zrušit účast</a>
                     </td>
                 </tr>
             {/foreach}

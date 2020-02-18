@@ -4,6 +4,9 @@
 namespace App\Presenters;
 
 use App\Model\ReservationManager;
+use Nette\Application\BadRequestException;
+use Nette\Application\ForbiddenRequestException;
+use Nette\Application\UI\Presenter;
 
 class UserInterfacePresenter extends BasePresenter {
 
@@ -19,7 +22,19 @@ class UserInterfacePresenter extends BasePresenter {
     }
 
     public function handleConfirmAttendance ($reservationId): void {
-        $this->reservationManager->newAttendant($reservationId, $this->getUser()->id);
+        try {
+            if (is_numeric($reservationId)) {
+                $this->reservationManager->newAttendant($reservationId, $this->getUser()->id);
+            } else {
+                throw new ForbiddenRequestException('Akce nemohla být vykonána, zadaný parametr neexistuje.');
+            }
+        } catch (ForbiddenRequestException $exception) {
+            $this->flashMessage($exception->getMessage());
+        }
+    }
+
+    public function handleCancelAttendance ($reservationId): void {
+        $this->reservationManager->cancelAttendance($reservationId, $this->getUser()->id);
     }
 
     public function isAttended ($reservationID) {

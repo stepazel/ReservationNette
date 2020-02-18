@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="21b20d50-6b1b-48c6-93dc-9a2c86506664" name="test.raml.cz" url="http://test.raml.cz">
+        <fileTransfer host="225105.w5.wedos.net" port="21" rootFolder="/subdom/test">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

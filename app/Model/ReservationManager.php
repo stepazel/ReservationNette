@@ -64,6 +64,12 @@ class ReservationManager {
         } else {
             return true;
         }
+    }
 
+    public function cancelAttendance ($reservationId, $userId): void {
+        $this->database->table('concert_attendance')
+            ->where('user_id = ?', $userId)
+            ->where('reservation_id = ?', $reservationId)
+            ->delete();
     }
 }
